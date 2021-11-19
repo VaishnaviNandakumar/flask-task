@@ -2,7 +2,7 @@ import os
 import pymongo
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
-from flask import Flask
+from flask import Flask, render_template
 import time
 from functools import wraps
 import threading
@@ -16,7 +16,7 @@ db = client['YOUTUBE']
 collection = db['music_videos']
 
 
-app = Flask(__name__, template_folder="../templates", static_folder='../static')
+app = Flask(__name__, template_folder="templates", static_folder='../static')
 
 def fetchData():
     print("Here")
@@ -42,6 +42,13 @@ def fetchData():
 @app.route('/')
 def main():
     return "Hello World"
+
+@app.route('/videos', methods=['GET'])
+def getData():
+    data = collection.find().sort([("publishedAt", pymongo.DESCENDING)])
+    keyset = ['videoID','title','description','publishedAt','thumbnail','channel']
+    return render_template("videolist.html", data_list=data, keyset=keyset)
+
 
 if __name__ == "__main__":
     app.secret_key =  os.environ['SECRET_KEY']
