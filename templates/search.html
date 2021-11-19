@@ -4,14 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video List</title>
+    <title>Search</title>
 </head>
 <body>
-    {% block body %}
-    <div class="container">
-        <h2>Video List</h2>
-            {% for data in data_list %}
-                <div class="row table-row">
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/search" method="POST">
+                <input type="text" name="query" placeholder="Search for a video">
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+
+    {% if documents>0 %}
+    <div class="row">
+        <div class="col">
+            <h2>Search Results</h2>
+                {% for data in search_results %}
+                <div class="row">
                     {{loop.index}}
                     {% for key in keyset %}
                     {% if key == "thumbnail"%}
@@ -20,9 +32,11 @@
                     <div class="col">{{data[key]}}</div> 
                     {% endfor %}
                 </div>
-            <br>
             {% endfor %}
+        </div>
     </div>
-    {% endblock %}    
+    {% endif%}
+</div>
+{% endblock %}  
 </body>
 </html>
