@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video List</title>
-</head>
-<body>
-    {% block body %}
-    <div class="container">
-        <h2>Video List</h2>
-            {% for data in data_list %}
-                <div class="row table-row">
-                    {{loop.index}}
-                    {% for key in keyset %}
-                    {% if key == "thumbnail"%}
-                    <img src={{data[key]}}>
-                    {% endif %}
-                    <div class="col">{{data[key]}}</div> 
-                    {% endfor %}
-                </div>
-            <br>
-            {% endfor %}
+<title>View Videos</title>
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1><b>Video List</b></h1>
+        </div>
     </div>
-    {% endblock %}    
-</body>
-</html>
+
+    {% for data in data_list %}
+        <div class="row">
+            <b>{{loop.index}}</b>
+            {% for key in keyset %}
+            {% if key == "thumbnail"%}
+            <img src={{data[key]}}>
+            {% else %}
+            <div class="col">
+                <b>{{key}} :</b> {{data[key]}}
+            </div> 
+            {% endif %}
+            {% endfor %}
+        </div>
+    <br>
+    {% endfor %}
+</div>
+{% endblock %}    

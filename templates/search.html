@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-</head>
-<body>
+<title>Search</title>
+{% extends 'base.html' %}
 {% block body %}
 <div class="container">
+    
+    <div class="row">
+        <div class="col">
+            <h1><b>Search </b></h1> 
+        </div>
+    </div>
+
     <div class="row">
         <div class="col">
             <form action="/search" method="POST">
@@ -19,24 +19,26 @@
     </div>
 
     {% if documents>0 %}
-    <div class="row">
-        <div class="col">
-            <h2>Search Results</h2>
-                {% for data in search_results %}
-                <div class="row">
-                    {{loop.index}}
-                    {% for key in keyset %}
-                    {% if key == "thumbnail"%}
-                    <img src={{data[key]}}>
-                    {% endif %}
-                    <div class="col">{{data[key]}}</div> 
-                    {% endfor %}
-                </div>
+        <div class="row">
+            <div class="col">
+                <h2><b>Results</b></h2>
+            </div>
+        </div>
+        {% for data in search_results %}
+        <div class="row">
+            <b>{{loop.index}}</b>
+            {% for key in keyset %}
+            {% if key == "thumbnail"%}
+            <img src={{data[key]}}>
+            {% else %}
+            <div class="col">
+                <b>{{key}} :</b> {{data[key]}}
+            </div> 
+            {% endif %}
             {% endfor %}
         </div>
-    </div>
+        {% endfor %}
     {% endif%}
 </div>
 {% endblock %}  
-</body>
-</html>
+
